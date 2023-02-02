@@ -5,20 +5,15 @@
   tags:
     - apt
 
-- name: Configure ssh
-  ansible.builtin.import_tasks: ssh.yml
+- name: Set swap file
+  ansible.builtin.import_tasks: swap.yml
+  when: not ansible_check_mode
+  become: true
   tags:
-    - ssh
+    - swap
 
-# - name: Set swap file
-#   ansible.builtin.import_tasks: swap.yml
-#   when: not ansible_check_mode
-#   become: true
-#   tags:
-#     - swap
-
-# - name: Set folders permissions
-#   ansible.builtin.import_tasks: misc.yml
-#   become: true
-#   tags:
-#     - misc
+- name: Set folders permissions
+  ansible.builtin.import_tasks: misc.yml
+  become: true
+  tags:
+    - misc

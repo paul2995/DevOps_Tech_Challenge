@@ -1,0 +1,16 @@
+---
+- name: Set proper permission on the {{ path }} directory.
+  file:
+    path: "/srv"
+    state: directory
+    owner: "{{ system_user }}"
+    group: "{{ system_group }}"
+    mode: 0755
+  become: true
+
+- name: Set hostname to {{ inventory_hostname }}.
+  hostname:
+    name: "{{ inventory_hostname }}"
+  become: true
+  tags:
+    - hostname
