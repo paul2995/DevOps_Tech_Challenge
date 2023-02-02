@@ -1,0 +1,22 @@
+plugin: amazon.aws.aws_ec2
+# aws_profile: default
+#aws_access_key:
+#aws_secret_key:
+
+regions:
+ - us-east-1
+ - us-east-2
+
+keyed_groups:
+  - key: tags
+    prefix: tag
+  - key: tags.Project
+    parent_group: projects
+    prefix: ''
+    separator: ''
+
+hostnames:
+  - tag:Name
+  
+compose:
+  ansible_host: public_ip_address

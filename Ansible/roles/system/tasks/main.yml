@@ -1,0 +1,24 @@
+---
+- name: Update and upgrade system dependencies
+  ansible.builtin.import_tasks: apt.yml
+  become: true
+  tags:
+    - apt
+
+- name: Configure ssh
+  ansible.builtin.import_tasks: ssh.yml
+  tags:
+    - ssh
+
+# - name: Set swap file
+#   ansible.builtin.import_tasks: swap.yml
+#   when: not ansible_check_mode
+#   become: true
+#   tags:
+#     - swap
+
+# - name: Set folders permissions
+#   ansible.builtin.import_tasks: misc.yml
+#   become: true
+#   tags:
+#     - misc

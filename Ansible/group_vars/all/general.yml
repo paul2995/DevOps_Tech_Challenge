@@ -1,0 +1,4 @@
+---
+# System variables
+system_user: ubuntu
+system_group: ubuntu

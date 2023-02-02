@@ -1,0 +1,29 @@
+---
+# System
+locale: en_US.UTF-8
+timezone: America/New_York
+
+# Swap
+swap_file_path: /swapfile
+swap_bs: "128M"
+swap_file_size_mb: "32"
+swap_swappiness: "60"
+swap_file_state: present
+swap_file_create_command: "dd if=/dev/zero of={{ swap_file_path }} bs={{ swap_bs }} count={{ swap_file_size_mb }}"
+swap_test_mode: false
+
+# Packages
+debian_frontend: DEBIAN_FRONTEND=noninteractive
+
+apt_repos:
+  - ppa:nginx/stable
+
+common_packages:
+  - apt-utils
+  - build-essential
+  - curl
+  - git
+  - python3
+  - software-properties-common
+  - vim
+  - nginx

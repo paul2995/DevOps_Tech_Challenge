@@ -1,0 +1,19 @@
+---
+
+# These tasks use the 'raw' module, thus do not required python to be installed.
+
+- name: Update system packages through APT.
+  ansible.builtin.raw: "{{ debian_frontend }} {{ item }}"
+  register: update_output
+  changed_when: update_output.rc != 0
+  loop:
+    - apt update
+    - apt upgrade -yq
+    - apt autoremove -yq
+    - apt autoclean -yq
+
+- name: Install required common system packages.
+  ansible.builtin.raw: "{{ debian_frontend }} apt install {{ item }} -yq"
+  register: common_packages_output
+  changed_when: common_packages_output.rc != 0
+  loop: "{{ common_packages }}"
