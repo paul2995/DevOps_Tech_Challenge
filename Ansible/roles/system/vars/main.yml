@@ -27,3 +27,8 @@ common_packages:
   - software-properties-common
   - vim
   - nginx
+
+# Remote access
+ssh_key_state: present
+ssh_keys:
+  - tomas.pub

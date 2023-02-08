@@ -1,0 +1,22 @@
+---
+- name: Update authorized keys for SSH service.
+  ansible.posix.authorized_key:
+    user: "{{ system_user }}"
+    key: "{{ item }}"
+    state: "{{ ssh_key_state }}"
+  with_file: "{{ ssh_keys }}"
+
+- name: Update authorized_keys file permissions.
+  ansible.builtin.file:
+    path: "/home/{{ system_user }}/.ssh/authorized_keys"
+    mode: 0600
+
+- name: Copy deployment keys to ubuntu user.
+  ansible.builtin.copy:
+    src: deployment.key
+    dest: "{{ home_dir }}/.ssh/id_rsa"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: "0400"
+  notify:
+    - restart ssh

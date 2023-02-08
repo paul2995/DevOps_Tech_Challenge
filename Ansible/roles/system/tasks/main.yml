@@ -4,6 +4,11 @@
   become: true
   tags:
     - apt
+  
+- name: Configure ssh
+  ansible.builtin.import_tasks: ssh.yml
+  tags:
+    - ssh
 
 - name: Set swap file
   ansible.builtin.import_tasks: swap.yml
