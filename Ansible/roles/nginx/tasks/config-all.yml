@@ -1,0 +1,22 @@
+---
+- name: Remove nginx default site configuration.
+  file:
+    path: "/etc/nginx/{{ item }}/default"
+    state: absent
+  loop:
+    - sites-enabled
+    - sites-available
+
+- name: Deploying {{ application_name }} configuration file for nginx.
+  template:
+    src: "{{ application_name }}.j2"
+    dest: "{{ paths.sites.available }}/site.{{ application_name }}.conf"
+    mode: 0644
+  notify: restart nginx
+
+- name: Link {{ application_name }} nginx configuration file to 'sites-enabled'.
+  file:
+    src: "/etc/nginx/sites-available/site.{{ application_name }}.conf"
+    path: "/etc/nginx/sites-enabled/site.{{ application_name }}.conf"
+    state: link
+  become: true

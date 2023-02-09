@@ -1,0 +1,38 @@
+---
+- name: Add official repositories for nginx.
+  apt_repository:
+    repo: "ppa:nginx/stable"
+    state: absent
+  register: nginx_repo
+  tags:
+    - apt
+    - nginx
+
+- name: Update apt cache if repo was added.
+  apt:
+    update_cache: yes
+  when: nginx_repo.changed
+  tags:
+    - skip_ansible_lint
+    - apt
+    - nginx
+
+- name: Ensure nginx is installed.
+  apt:
+    name: nginx
+    state: present
+  tags:
+    - apt
+    - nginx
+
+- name: Deploying base configuration file for nginx.
+  template:
+    src: "base-config.j2"
+    dest: "/etc/nginx/nginx.conf"
+    mode: 0644
+  notify: restart nginx
+
+- name: Generate DH parameters (2048 bits).
+  openssl_dhparam:
+    path: "{{ paths.root }}/dhparams.pem"
+    size: 2048

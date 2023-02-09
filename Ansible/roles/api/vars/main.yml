@@ -1,0 +1,4 @@
+# Application settings
+repo: "git@github.com:gbh-tech/demo-{{ application_name }}.git"
+path: "/srv/{{ application_name }}"
+api_port: 3001

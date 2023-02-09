@@ -1,0 +1,9 @@
+---
+- import_tasks: repo.yml
+  tags:
+    - deploy
+    - repo
+
+- import_tasks: deploy.yml
+  tags:
+    - deploy

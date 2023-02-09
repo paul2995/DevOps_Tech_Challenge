@@ -1,0 +1,49 @@
+---
+- name: Add environment configuration file (.env).
+  template:
+    src: env.j2
+    dest: "{{ path }}/.env"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0644
+
+- name: Install application dependencies with npm.
+  shell: "npm install"
+  args:
+    chdir: "{{ path }}"
+
+- name: Create pm2 directory if it does not exist
+  ansible.builtin.file:
+    path: "{{ path }}/pm2"
+    state: directory
+    mode: '0755'
+
+- name: Add PM2 ecosystem file.
+  template:
+    src: ecosystem.j2
+    dest: "{{ path }}/pm2/ecosystem.yml"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0644
+
+- name: Reload the PM2 ecosystem if currently running.
+  shell: |
+    pm2 reload pm2/ecosystem.yml --update-env
+  args:
+    chdir: "{{ path }}"
+  become_user: "{{ system_user }}"
+  ignore_errors: yes
+  no_log: yes
+  register: api_state
+
+- name: Run the API using PM2.
+  shell: |
+    pm2 start pm2/ecosystem.yml
+  args:
+    chdir: "{{ path }}"
+  become_user: "{{ system_user }}"
+  when: api_state is failed
+
+- name: Save PM2 {{ application_name }} state.
+  shell: pm2 save
+  become_user: "{{ system_user }}"

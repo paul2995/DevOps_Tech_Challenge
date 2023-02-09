@@ -2,3 +2,8 @@
 # System variables
 system_user: ubuntu
 system_group: ubuntu
+
+home_dir: "/home/{{ system_user }}"
+
+# Default git revision
+version: main

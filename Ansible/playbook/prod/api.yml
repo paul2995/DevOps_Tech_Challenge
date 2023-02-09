@@ -1,4 +1,4 @@
 ---
 - import_playbook: ../api.yml
   vars:
-    target: paul_lab
+    target: paullabsvr1

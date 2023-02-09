@@ -1,0 +1,9 @@
+---
+- name: Cloning {{ application_name }} repository.
+  git:
+    repo: "{{ repo }}"
+    dest: "{{ path }}"
+    force: yes
+    update: yes
+    accept_hostkey: yes
+    version: "{{ version }}"

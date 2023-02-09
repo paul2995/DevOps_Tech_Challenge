@@ -3,4 +3,7 @@
   user: "{{ system_user }}"
   gather_facts: true
   roles:
-    - system
+    # - system
+    # - nodejs
+    - api
+    - nginx

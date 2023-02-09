@@ -1,0 +1,9 @@
+- name: Install pm2 package globally.
+  npm:
+    name: pm2
+    global: yes
+  become: true
+
+- name: Ensure PM2 is enabled at startup.
+  shell: "pm2 startup systemd -u {{ system_user }} --hp /home/{{ system_user }}"
+  become: true
