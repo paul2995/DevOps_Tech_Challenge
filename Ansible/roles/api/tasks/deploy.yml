@@ -17,6 +17,8 @@
     path: "{{ path }}/pm2"
     state: directory
     mode: '0755'
+  tags: 
+    pm2
 
 - name: Add PM2 ecosystem file.
   template:
@@ -25,6 +27,8 @@
     owner: "{{ system_user }}"
     group: "{{ system_user }}"
     mode: 0644
+  tags: 
+    pm2
 
 - name: Reload the PM2 ecosystem if currently running.
   shell: |
@@ -35,6 +39,8 @@
   ignore_errors: yes
   no_log: yes
   register: api_state
+  tags: 
+    pm2
 
 - name: Run the API using PM2.
   shell: |
@@ -43,7 +49,11 @@
     chdir: "{{ path }}"
   become_user: "{{ system_user }}"
   when: api_state is failed
+  tags: 
+    pm2
 
 - name: Save PM2 {{ application_name }} state.
   shell: pm2 save
   become_user: "{{ system_user }}"
+  tags: 
+    pm2

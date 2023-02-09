@@ -10,7 +10,7 @@ server {
   error_log {{ paths.logs }}/{{ application_name }}.error.log;
 
   location / {
-    proxy_pass http://localhost:{{ application_ports.api }};
+    proxy_pass http://localhost:{{ application_port }};
     {{ nginx_main_location_proxy_set_headers | indent(4, False) }}
   }
 }

@@ -1,0 +1,17 @@
+---
+# Nginx configuration paths
+paths:
+  root: "/etc/nginx"
+  logs: "/var/log/nginx"
+  certs: "/etc/letsencrypt/live"
+  sites:
+    modules: "/etc/nginx/modules-enabled"
+    available: "/etc/nginx/sites-available"
+    enabled: "/etc/nginx/sites-enabled"
+
+# Nginx - Reverse proxy - Headers
+nginx_main_location_proxy_set_headers: |
+  proxy_set_header Host $host;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;

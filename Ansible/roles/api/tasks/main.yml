@@ -7,3 +7,7 @@
 - import_tasks: deploy.yml
   tags:
     - deploy
+
+- import_tasks: nginx.yml
+  tags: 
+    - nginx

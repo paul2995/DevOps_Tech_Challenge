@@ -22,3 +22,9 @@
   become: true
   tags:
     - misc
+
+- name: Nginx initial configuration.
+  ansible.builtin.import_tasks: nginx.yml
+  become: true
+  tags:
+    - nginx
